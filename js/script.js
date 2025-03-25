@@ -64,7 +64,16 @@ document.addEventListener('click', function(e) {
             behavior: 'smooth' // Плавная прокрутка
         });
     }
+
+    if(e.target.closest('.iframe-overlay')) {
+        e.target.style.display = 'none';
+    }
 })
+// document.querySelectorAll('.iframe-overlay').forEach(overlay => {
+//     overlay.addEventListener('click', () => {
+//         overlay.style.display = 'none'; // Убираем overlay при клике
+//     });
+// });
 window.addEventListener('scroll', function () {
     const header = document.querySelector('.header');
     const scrollPosition = window.scrollY || window.pageYOffset;
@@ -120,25 +129,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function switchContent(type) {
         // Скрываем все элементы
         serviceItems.forEach((item, index) => {
-            item.style.opacity = '0'; // Плавно исчезаем
-            setTimeout(() => {
-                item.style.display = 'none'; // Полностью скрываем элемент
-            }, index * 50 + 300); // Задержка для каждого элемента
+            item.style.display = 'none';
         });
     
-        // Ждём, пока все элементы скроются, и только потом показываем новые
-        const totalDelay = serviceItems.length * 50 + 300; // Общая задержка для всех элементов
-        setTimeout(() => {
-            const visibleItems = document.querySelectorAll(`.services-item[data-type="${type}"]`);
-            visibleItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.display = 'block'; // Показываем элемент
-                    setTimeout(() => {
-                        item.style.opacity = '1'; // Плавно появляемся
-                    }, 10); // Небольшая задержка для начала анимации
-                }, index * 50); // Задержка для каждого элемента
-            });
-        }, totalDelay); // Ждём, пока все старые элементы скроются
+        const visibleItems = document.querySelectorAll(`.services-item[data-type="${type}"]`);
+        visibleItems.forEach((item, index) => {
+            item.style.display = 'block'; // Показываем элемент
+        });
     }
 
     // Обработчик клика на тип услуги
@@ -157,8 +154,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // По умолчанию показываем контент для "заборы"
-    switchContent('fences');
+    if(serviceTypes.length >= 1) {
+        switchContent('fences');
+    }
 
+    //--------------------------------------------------------------------------
     const answerItems = document.querySelectorAll('.answer-item');
 
     answerItems.forEach(item => {
@@ -184,8 +184,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const gallerySelectActive = document.querySelector('.galery-types-select-active');
     const gallerySelectItems = document.querySelector('.galery-types-select-items');
     const gallerySelectItem = document.querySelectorAll('.galery-types-select-item');
-
-    let visibleItems = 4; // Количество элементов, которые показываются изначально
+    let galaryMore = document.querySelector('.galary-more')
+    let visibleItems;
+    if(galaryMore) {
+        visibleItems = 8;
+    } else {
+        visibleItems = 4; // Количество элементов, которые показываются изначально
+    }
     let currentType = 'Все работы'; // Текущий выбранный тип
     let filteredItems = []; // Массив для хранения отфильтрованных элементов
 
@@ -197,8 +202,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return type === 'Все работы' || itemType === type;
         });
         // Сбрасываем количество видимых элементов
-        visibleItems = 4;
-
+        if(galaryMore) {
+            visibleItems = 8;
+        } else {
+            visibleItems = 4;
+        }
         // Обновляем отображение
         updateVisibleItems();
     }
@@ -223,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Изначальная фильтрация и отображение
     filterItemsByType(currentType);
-
     // Обработчик клика на тип (для десктопов)
     galleryTypes.forEach(type => {
         type.addEventListener('click', function () {
@@ -241,14 +248,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик клика на кнопку "Показать еще"
     loadMoreButton.addEventListener('click', function () {
-        visibleItems += 4; // Увеличиваем количество видимых элементов на 4
+        if(galaryMore) {
+            visibleItems += 8; // Увеличиваем количество видимых элементов на 8
+        } else {
+            visibleItems += 4; // Увеличиваем количество видимых элементов на 4
+        }
         updateVisibleItems(); // Обновляем отображение элементов
     });
 
-    // Обработчик для мобильного селекта
-    gallerySelectActive.addEventListener('click', function () {
-        gallerySelectItems.classList.toggle('active'); // Показываем/скрываем выпадающий список
-    });
+    if(gallerySelectActive) {
+        // Обработчик для мобильного селекта
+        gallerySelectActive.addEventListener('click', function () {
+            gallerySelectItems.classList.toggle('active'); // Показываем/скрываем выпадающий список
+        });
+    }
 
     // Обработчик выбора элемента в селекте
     gallerySelectItem.forEach(item => {
@@ -269,7 +282,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //Тут снизу все что связона с открытием картинок в модалке---------------------------------------------------------------------------------------------
     const modal = document.getElementById('photoModal');
     const modalContent = modal.querySelector('.photo-slider .swiper-wrapper');
-    const closeModal = modal.querySelector('.close');
     const images = document.querySelectorAll('._photo-img');
 
     let modalSwiper;
@@ -349,6 +361,7 @@ const swiper = new Swiper('.promotions-sliders', {
 const swiperBlog = new Swiper('.blog-sliders', {
     spaceBetween: 10,
     speed: 500,
+    slidesPerView: 'auto',
     // Navigation arrows
     navigation: {
       nextEl: '.blog-button-next',
@@ -360,7 +373,6 @@ const swiperBlog = new Swiper('.blog-sliders', {
         }
       }
 });
-
 let galerys = document.querySelectorAll('.galery-sliders');
 galerys.forEach((item) => {
     let itemGalery = item.closest('.galery-item')
@@ -392,8 +404,160 @@ galerys.forEach((item) => {
           },
     });
 })
-
 const swiperReviews = new Swiper('.review-sliders', {
     spaceBetween: 6,
+    slidesPerView: 'auto',
     speed: 500,
+    pagination: {
+        el: '.review-pagination',
+        clickable: true,
+      },
 });
+const swiperAdditionally = new Swiper('.prices-additionally-sliders', {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    speed: 500,
+    pagination: {
+        el: '.prices-additionally-pagination',
+        clickable: true,
+    },
+});
+const swiperPricesExamples = new Swiper('.prices-examples-sliders', {
+    slidesPerView: 1,
+    spaceBetween: 17.5,
+    initialSlide: 2,
+    speed: 500,
+    navigation: {
+        nextEl: '.prices-examples-button-next',
+        prevEl: '.prices-examples-button-prev',
+      },
+});
+let MetalPicket = document.querySelectorAll('.metal-picket-sliders')
+MetalPicket.forEach((item) => {
+    const swiperMetalPicket = new Swiper(item, {
+        slidesPerView: 'auto',
+        spaceBetween: 15,
+        speed: 500,
+        navigation: {
+            nextEl: '.metal-picket-button-next',
+            prevEl: '.metal-picket-button-prev',
+          },
+    });
+})
+//Тут мы создаем слайдер с цветами забора и также переключаемя между ними
+let fenceColors = document.querySelector('.fence-colors')
+let swiperFenceColors;
+function switchColors(type) {
+    if(swiperFenceColors) {
+        swiperFenceColors.disable()
+    }
+    let activeColor = document.querySelector('.fence-colors_pagination_img-active');
+    let activeSliderColor = document.querySelector('.fence-colors-type-active')
+    let typeSlider = document.querySelector('.fence-colors-type-active')
+    if(type) {
+        typeSlider = document.querySelector(`[data-type="${type.getAttribute('data-type')}"]`)
+
+        activeColor.classList.remove('fence-colors_pagination_img-active')
+        activeSliderColor.classList.remove('fence-colors-type-active')
+    
+        typeSlider.classList.add('fence-colors-type-active')
+        type.classList.add('fence-colors_pagination_img-active')
+    }
+
+    swiperFenceColors = new Swiper(typeSlider, {
+        slidesPerView: 1,
+        speed: 500,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: '.fence-colors-button-next',
+            prevEl: '.fence-colors-button-prev',
+        },
+        pagination: {
+            el: '.fence-colors-pagination-mini',
+            clickable: true,
+        },
+    });
+}
+if(fenceColors) {
+    switchColors()
+}
+//-----------------------------------------------------------------------------------------------
+let touchStartX = 0; // Начальная позиция касания по оси X
+let touchEndX = 0;   // Конечная позиция касания по оси X
+const swipeThreshold = 50; // Порог для определения свайпа (в пикселях)
+let swipeBlock = document.querySelector('.prices-tops')
+if(swipeBlock) {
+    // Обработчик начала касания
+    swipeBlock.addEventListener('touchstart', (event) => {
+        touchStartX = event.touches[0].clientX; // Запоминаем начальную позицию
+    })
+    
+    // Обработчик окончания касания
+    swipeBlock.addEventListener('touchend', (event) => {
+        touchEndX = event.changedTouches[0].clientX; // Запоминаем конечную позицию
+        handleSwipe(); // Определяем свайп
+    })
+}
+
+// Функция для определения свайпа
+function handleSwipe() {
+    const deltaX = touchEndX - touchStartX; // Разница по оси X
+
+    if (Math.abs(deltaX) > swipeThreshold) { // Проверяем, превышает ли разница порог
+        if (deltaX > 0) {
+            btnNavigation(false) // Если разница положительная, свайп вправо
+        } else {
+            btnNavigation(true) // Если разница отрицательная, свайп влево
+        }
+    }
+}
+function deleteActiveClass(name, type, activeClass) {
+    let typeActive = document.querySelector(`.${activeClass}`)
+    let allItems = document.querySelectorAll(`${name}`);
+    let pressedItem =  Array.from(allItems).find(item => item.getAttribute('data-type') == type)
+    typeActive.classList.remove(`${activeClass}`)
+    pressedItem.classList.add(`${activeClass}`)
+}
+function btnNavigation(boolean) {
+    let allItems = document.querySelectorAll('.prices-type');
+    let typeActive = document.querySelector('.prices-type-active')
+    let index = Array.from(allItems).indexOf(typeActive);
+    let type;
+    if(boolean) {
+        type = allItems[index + 1];
+        index = index + 1
+    } else {
+        type = allItems[index - 1];
+        index = index - 1
+    }
+    typeChanges(type)
+}
+function typeChanges(type) {
+    let typeValues;
+    let slideElement = document.querySelectorAll('._slide-element');
+    if(!type) {
+        typeValues = document.querySelector('.prices-type-active').getAttribute('data-type');
+    } else {
+
+        type = type.getAttribute('data-type')
+        //Добовляем активный клас нашим типам
+        deleteActiveClass('.prices-type', type, 'prices-type-active')
+        deleteActiveClass('.prices-slide-pagination-bullet', type, 'prices-slide-pagination-bullet-active')
+        typeValues = type;
+    }
+
+    //Фильтруем масив ишя слайды с таким же типом
+    let slideActive = Array.from(slideElement).filter((item) => item.getAttribute('data-type') == typeValues)
+    
+    //Скрываем все элементы а потом показываем элементы типа
+    slideElement.forEach((item) => {
+        item.style.display = 'none'
+    })
+    slideActive.forEach((item) => {
+        item.style.display = 'block'
+    })
+}
+let pricesTypes = document.querySelector('.prices-types')
+if(pricesTypes) {
+    typeChanges()
+}
