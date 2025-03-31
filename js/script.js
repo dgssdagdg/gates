@@ -1,127 +1,43 @@
-document.addEventListener('click', function(e) {
-    let menuBtn = document.querySelector('.menu-btn');
-    let menu = document.querySelector('.menu');
-    if(e.target.closest('.menu-btn')) {
-        menuBtn.classList.toggle('active');
-        menu.classList.toggle('active');
-    } else if (menu.closest('.active') && !e.target.closest('.menu-row') && menuBtn.closest('.active')) {
-        menuBtn.classList.remove('active');
-        menu.classList.remove('active');
+//Тут мы создаем слайдер с цветами забора и также переключаемя между ними
+let fenceColors = document.querySelector('.fence-colors')
+let swiperFenceColors;
+function switchColors(type) {
+    if(swiperFenceColors) {
+        swiperFenceColors.disable()
     }
+    let activeColor = document.querySelector('.fence-colors_pagination_img-active');
+    let activeSliderColor = document.querySelector('.fence-colors-type-active')
+    let typeSlider = document.querySelector('.fence-colors-type-active')
+    if(type) {
+        typeSlider = document.querySelector(`[data-type="${type.getAttribute('data-type')}"]`)
 
-    let catalogMenu = document.querySelector('.catalog-header')
-    if(e.target.closest('.header-open-meny-btn')) {
-        catalogMenu.classList.toggle('_active')
-    } else if(catalogMenu.closest('._active') && !e.target.closest('.catalog-header-body')) {
-        catalogMenu.classList.remove('_active')
-    }
-
-    let callBackMenu = document.querySelector('.call-back')
-    if(e.target.closest('.header-open-pop-up') || e.target.closest('._open-call-back')) {
-        callBackMenu.classList.toggle('_active')
-    }   else if(callBackMenu.closest('._active') && !e.target.closest('.call-back-body') || e.target.closest('.call-back-close')) {
-        let callBackMenuInput = document.querySelector('.call-back-input')
-        callBackMenu.classList.remove('_active')
-        callBackMenuInput.value = ''
-    }
-
-    let telMenu = document.querySelector('.tel-pop-up')
-    let telMenuBtn = document.querySelector('.header-mini-tel-btn')
-    if(e.target.closest('.header-mini-tel-btn')) {
-        telMenu.classList.toggle('_active')
-        telMenuBtn.classList.toggle('_active')
-    } else if(telMenu.closest('._active') && !e.target.closest('.tel-pop-up-body')) {
-        telMenu.classList.remove('_active')
-        telMenuBtn.classList.remove('_active')
-    }
-
-    if (e.target.closest('.menu-select-open')) {
-        let menuSelect = e.target.closest('.menu-select');
-        let menuItems = menuSelect.querySelector('.menu-select-items');
+        activeColor.classList.remove('fence-colors_pagination_img-active')
+        activeSliderColor.classList.remove('fence-colors-type-active')
     
-        if (menuSelect.classList.contains('_active')) {
-            // Если блок уже открыт, закрываем его
-            menuSelect.classList.remove('_active');
-            menuItems.style.maxHeight = '0'; // Сбрасываем высоту
-        } else {
-            // Если блок закрыт, открываем его
-            menuSelect.classList.add('_active');
-            // Устанавливаем max-height на реальную высоту содержимого
-            menuItems.style.maxHeight = menuItems.scrollHeight + 'px';
-        }
+        typeSlider.classList.add('fence-colors-type-active')
+        type.classList.add('fence-colors_pagination_img-active')
     }
 
-    let menuPhone = document.querySelector('.mini-phone')
-    if(e.target.closest('.mini-phone-block') && !menuPhone.closest('._active')) {
-        menuPhone.classList.add('_active')
-    } else if(menuPhone.closest('._active') && e.target.closest('.mini-phone-close')) {
-        menuPhone.classList.remove('_active')
-    }
-
-    if(e.target.closest('._scroll-top')) {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Плавная прокрутка
-        });
-    }
-
-    if(e.target.closest('.iframe-overlay')) {
-        e.target.style.display = 'none';
-    }
-})
-// document.querySelectorAll('.iframe-overlay').forEach(overlay => {
-//     overlay.addEventListener('click', () => {
-//         overlay.style.display = 'none'; // Убираем overlay при клике
-//     });
-// });
-window.addEventListener('scroll', function () {
-    const header = document.querySelector('.header');
-    const scrollPosition = window.scrollY || window.pageYOffset;
-
-    if (scrollPosition > 10) {
-        header.classList.add('_shadow');
-    } else {
-        header.classList.remove('_shadow');
-    }
-});
-
-// Функция для форматирования телефона
-function formatPhoneInput(value) {
-    value = value.replace(/\D/g, ''); // Удаляем всё, кроме цифр
-    let formattedValue = '';
-
-    if (value.length > 0) {
-        formattedValue += '+7 ';
-        if (value.length > 1) {
-        formattedValue += '(' + value.substring(1, 4);
-        }
-        if (value.length > 4) {
-        formattedValue += ') ' + value.substring(4, 7);
-        }
-        if (value.length > 7) {
-        formattedValue += '-' + value.substring(7, 9);
-        }
-        if (value.length > 9) {
-        formattedValue += '-' + value.substring(9, 11);
-        }
-    }
-
-    return formattedValue;
+    swiperFenceColors = new Swiper(typeSlider, {
+        slidesPerView: 'auto',
+        speed: 300,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: '.fence-colors-button-next',
+            prevEl: '.fence-colors-button-prev',
+        },
+        pagination: {
+            el: '.fence-colors-pagination-mini',
+            clickable: true,
+        },
+    });
 }
 
-// Находим все поля с классом phone-mask
-const phoneInputs = document.querySelectorAll('._phone-mask');
-
-// Добавляем обработчик события input для каждого поля
-phoneInputs.forEach(input => {
-    input.addEventListener('input', function (e) {
-        e.target.value = formatPhoneInput(e.target.value);
-    });
-});
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
+    if(fenceColors) {
+        switchColors()
+    }
+//---------------------------------------------------------------------------------------------
     const serviceTypes = document.querySelectorAll('.services-type');
     const serviceItems = document.querySelectorAll('.services-item');
 
@@ -230,7 +146,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Изначальная фильтрация и отображение
-    filterItemsByType(currentType);
+
+    if(galleryItems.length >= 1){
+        filterItemsByType(currentType);
+    }
     // Обработчик клика на тип (для десктопов)
     galleryTypes.forEach(type => {
         type.addEventListener('click', function () {
@@ -247,14 +166,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Обработчик клика на кнопку "Показать еще"
-    loadMoreButton.addEventListener('click', function () {
-        if(galaryMore) {
-            visibleItems += 8; // Увеличиваем количество видимых элементов на 8
-        } else {
-            visibleItems += 4; // Увеличиваем количество видимых элементов на 4
-        }
-        updateVisibleItems(); // Обновляем отображение элементов
-    });
+    if(loadMoreButton) {
+        loadMoreButton.addEventListener('click', function () {
+            if(galaryMore) {
+                visibleItems += 8; // Увеличиваем количество видимых элементов на 8
+            } else {
+                visibleItems += 4; // Увеличиваем количество видимых элементов на 4
+            }
+            updateVisibleItems(); // Обновляем отображение элементов
+        });
+    }
 
     if(gallerySelectActive) {
         // Обработчик для мобильного селекта
@@ -281,7 +202,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //Тут снизу все что связона с открытием картинок в модалке---------------------------------------------------------------------------------------------
     const modal = document.getElementById('photoModal');
-    const modalContent = modal.querySelector('.photo-slider .swiper-wrapper');
+    let modalContent;
+    if(modal) {
+        modalContent = modal.querySelector('.photo-slider .swiper-wrapper');
+    }
     const images = document.querySelectorAll('._photo-img');
 
     let modalSwiper;
@@ -340,147 +264,157 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
-});
 
+    //Оптимизация ifranme--------------------------------------------------------------------------
+    const lazyIframes = document.querySelectorAll('.lazy-iframe');
 
-const swiper = new Swiper('.promotions-sliders', {
-    // Optional parameters
-    slidesPerView: 3,
-    spaceBetween: 6,
-    loop: true,
-    speed: 500,
-    pagination: {
-      el: '.promotions-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.promotions-button-next',
-      prevEl: '.promotions-button-prev',
-    },
-});
-const swiperBlog = new Swiper('.blog-sliders', {
-    spaceBetween: 10,
-    speed: 500,
-    slidesPerView: 'auto',
-    // Navigation arrows
-    navigation: {
-      nextEl: '.blog-button-next',
-      prevEl: '.blog-button-prev',
-    },
-    breakpoints: {
-        768: {
-          slidesPerView: 2,
-        }
-      }
-});
-let galerys = document.querySelectorAll('.galery-sliders');
-galerys.forEach((item) => {
-    let itemGalery = item.closest('.galery-item')
-    let prev = itemGalery.querySelector('.galery-button-prev')
-    let next = itemGalery.querySelector('.galery-button-next')
-    let pagination = itemGalery.querySelector('.galery-pagination')
-    const swiperGalery = new Swiper(item, {
-        speed: 500,
-        // Navigation arrows
-        navigation: {
-          nextEl: next,
-          prevEl: prev,
-        },
-        pagination: {
-            el: pagination,
-            clickable: true,
-            renderBullet: function (index, className) {
-                // Получаем все слайды
-                const slides = item.querySelectorAll('.swiper-slide');
-                // Извлекаем путь к изображению из слайда
-                const imgSrc = slides[index].querySelector('img').getAttribute('src');
-                // Возвращаем кастомный элемент пагинации
-                return `
-                    <span class="${className}">
-                        <img src="${imgSrc}" alt="Thumbnail ${index + 1}">
-                    </span>
-                `;
-            },
-          },
-    });
-})
-const swiperReviews = new Swiper('.review-sliders', {
-    spaceBetween: 6,
-    slidesPerView: 'auto',
-    speed: 500,
-    pagination: {
-        el: '.review-pagination',
-        clickable: true,
-      },
-});
-const swiperAdditionally = new Swiper('.prices-additionally-sliders', {
-    slidesPerView: 1,
-    spaceBetween: 10,
-    speed: 500,
-    pagination: {
-        el: '.prices-additionally-pagination',
-        clickable: true,
-    },
-});
-const swiperPricesExamples = new Swiper('.prices-examples-sliders', {
-    slidesPerView: 1,
-    spaceBetween: 17.5,
-    initialSlide: 2,
-    speed: 500,
-    navigation: {
-        nextEl: '.prices-examples-button-next',
-        prevEl: '.prices-examples-button-prev',
-      },
-});
-let MetalPicket = document.querySelectorAll('.metal-picket-sliders')
-MetalPicket.forEach((item) => {
-    const swiperMetalPicket = new Swiper(item, {
-        slidesPerView: 'auto',
-        spaceBetween: 15,
-        speed: 500,
-        navigation: {
-            nextEl: '.metal-picket-button-next',
-            prevEl: '.metal-picket-button-prev',
-          },
-    });
-})
-//Тут мы создаем слайдер с цветами забора и также переключаемя между ними
-let fenceColors = document.querySelector('.fence-colors')
-let swiperFenceColors;
-function switchColors(type) {
-    if(swiperFenceColors) {
-        swiperFenceColors.disable()
+    if ('IntersectionObserver' in window) {
+        const iframeObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const iframe = entry.target;
+                    iframe.src = iframe.dataset.src;
+                    iframeObserver.unobserve(iframe);
+                }
+            });
+        });
+
+        lazyIframes.forEach((iframe) => {
+            iframeObserver.observe(iframe);
+        });
+    } else {
+        // Fallback для старых браузеров (загрузить сразу)
+        lazyIframes.forEach((iframe) => {
+            iframe.src = iframe.dataset.src;
+        });
     }
-    let activeColor = document.querySelector('.fence-colors_pagination_img-active');
-    let activeSliderColor = document.querySelector('.fence-colors-type-active')
-    let typeSlider = document.querySelector('.fence-colors-type-active')
-    if(type) {
-        typeSlider = document.querySelector(`[data-type="${type.getAttribute('data-type')}"]`)
+});
 
-        activeColor.classList.remove('fence-colors_pagination_img-active')
-        activeSliderColor.classList.remove('fence-colors-type-active')
+document.addEventListener('click', function(e) {
+    let menuBtn = document.querySelector('.menu-btn');
+    let menu = document.querySelector('.menu');
+    if(e.target.closest('.menu-btn')) {
+        menuBtn.classList.toggle('active');
+        menu.classList.toggle('active');
+    } else if (menu.closest('.active') && !e.target.closest('.menu-row') && menuBtn.closest('.active')) {
+        menuBtn.classList.remove('active');
+        menu.classList.remove('active');
+    }
+
+    let catalogMenu = document.querySelector('.catalog-header')
+    if(e.target.closest('.header-open-meny-btn')) {
+        catalogMenu.classList.toggle('_active')
+    } else if(catalogMenu.closest('._active') && !e.target.closest('.catalog-header-body')) {
+        catalogMenu.classList.remove('_active')
+    }
+
+    let callBackMenu = document.querySelector('.call-back')
+    if(e.target.closest('.header-open-pop-up') || e.target.closest('._open-call-back')) {
+        callBackMenu.classList.toggle('_active')
+    }   else if(callBackMenu.closest('._active') && !e.target.closest('.call-back-body') || e.target.closest('.call-back-close')) {
+        let callBackMenuInput = document.querySelector('.call-back-input')
+        callBackMenu.classList.remove('_active')
+        callBackMenuInput.value = ''
+    }
+
+    let telMenu = document.querySelector('.tel-pop-up')
+    let telMenuBtn = document.querySelector('.header-mini-tel-btn')
+    if(e.target.closest('.header-mini-tel-btn')) {
+        telMenu.classList.toggle('_active')
+        telMenuBtn.classList.toggle('_active')
+    } else if(telMenu.closest('._active') && !e.target.closest('.tel-pop-up-body')) {
+        telMenu.classList.remove('_active')
+        telMenuBtn.classList.remove('_active')
+    }
+
+    if (e.target.closest('.menu-select-open')) {
+        let menuSelect = e.target.closest('.menu-select');
+        let menuItems = menuSelect.querySelector('.menu-select-items');
     
-        typeSlider.classList.add('fence-colors-type-active')
-        type.classList.add('fence-colors_pagination_img-active')
+        if (menuSelect.classList.contains('_active')) {
+            // Если блок уже открыт, закрываем его
+            menuSelect.classList.remove('_active');
+            menuItems.style.maxHeight = '0'; // Сбрасываем высоту
+        } else {
+            // Если блок закрыт, открываем его
+            menuSelect.classList.add('_active');
+            // Устанавливаем max-height на реальную высоту содержимого
+            menuItems.style.maxHeight = menuItems.scrollHeight + 'px';
+        }
     }
 
-    swiperFenceColors = new Swiper(typeSlider, {
-        slidesPerView: 1,
-        speed: 500,
-        spaceBetween: 20,
-        navigation: {
-            nextEl: '.fence-colors-button-next',
-            prevEl: '.fence-colors-button-prev',
-        },
-        pagination: {
-            el: '.fence-colors-pagination-mini',
-            clickable: true,
-        },
+    let menuPhone = document.querySelector('.mini-phone')
+    if(e.target.closest('.mini-phone-block') && !menuPhone.closest('._active')) {
+        menuPhone.classList.add('_active')
+    } else if(menuPhone.closest('._active') && e.target.closest('.mini-phone-close')) {
+        menuPhone.classList.remove('_active')
+    }
+
+    if(e.target.closest('._scroll-top')) {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Плавная прокрутка
+        });
+    }
+
+    if(e.target.closest('.iframe-overlay')) {
+        e.target.style.display = 'none';
+    }
+
+
+    let nav = document.querySelector('.navigation')
+    if(e.target.closest('.navigation-open')) {
+        nav.classList.add('_active')
+    }
+    if(e.target.closest('.navigation-close')) {
+        nav.classList.remove('_active')
+    }
+})
+window.addEventListener('scroll', function () {
+    const header = document.querySelector('.header');
+    const scrollPosition = window.scrollY || window.pageYOffset;
+
+    if (scrollPosition > 10) {
+        header.classList.add('_shadow');
+    } else {
+        header.classList.remove('_shadow');
+    }
+});
+
+// Функция для форматирования телефона
+function formatPhoneInput(value) {
+    value = value.replace(/\D/g, ''); // Удаляем всё, кроме цифр
+    let formattedValue = '';
+
+    if (value.length > 0) {
+        formattedValue += '+7 ';
+        if (value.length > 1) {
+        formattedValue += '(' + value.substring(1, 4);
+        }
+        if (value.length > 4) {
+        formattedValue += ') ' + value.substring(4, 7);
+        }
+        if (value.length > 7) {
+        formattedValue += '-' + value.substring(7, 9);
+        }
+        if (value.length > 9) {
+        formattedValue += '-' + value.substring(9, 11);
+        }
+    }
+
+    return formattedValue;
+}
+
+// Находим все поля с классом phone-mask
+const phoneInputs = document.querySelectorAll('._phone-mask');
+
+// Добавляем обработчик события input для каждого поля
+phoneInputs.forEach(input => {
+    input.addEventListener('input', function (e) {
+        e.target.value = formatPhoneInput(e.target.value);
     });
-}
-if(fenceColors) {
-    switchColors()
-}
+});
+
 //-----------------------------------------------------------------------------------------------
 let touchStartX = 0; // Начальная позиция касания по оси X
 let touchEndX = 0;   // Конечная позиция касания по оси X
@@ -561,3 +495,143 @@ let pricesTypes = document.querySelector('.prices-types')
 if(pricesTypes) {
     typeChanges()
 }
+
+function isSafari() {
+    return (
+      /constructor/i.test(window.HTMLElement) ||
+      (function(p) { return p.toString() === "[object SafariRemoteNotification]"; })(
+        !window['safari'] || safari.pushNotification
+      )
+    );
+}
+const eventName = isSafari() ? 'load' : 'DOMContentLoaded';
+// Оптимизированный обработчик загрузки
+document.addEventListener(eventName, function () {
+    if(fenceColors) {
+        switchColors()
+    }
+    let swiperone = document.querySelector('.promotions-sliders');
+    if(swiperone) {
+        const swiper = new Swiper('.promotions-sliders', {
+            // Optional parameters
+            slidesPerView: 3,
+            spaceBetween: 6,
+            loop: true,
+            speed: 500,
+            pagination: {
+              el: '.promotions-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.promotions-button-next',
+              prevEl: '.promotions-button-prev',
+            },
+        });
+    }
+
+    let swiperBlogItem = document.querySelector('.blog-sliders');
+    if(swiperBlogItem) {
+        const swiperBlog = new Swiper('.blog-sliders', {
+            spaceBetween: 10,
+            speed: 500,
+            slidesPerView: 'auto',
+            // Navigation arrows
+            navigation: {
+              nextEl: '.blog-button-next',
+              prevEl: '.blog-button-prev',
+            },
+            breakpoints: {
+                768: {
+                  slidesPerView: 2,
+                }
+              }
+        });
+    }
+
+    let galerys = document.querySelectorAll('.galery-sliders');
+    galerys.forEach((item) => {
+        let itemGalery = item.closest('.galery-item')
+        let prev = itemGalery.querySelector('.galery-button-prev')
+        let next = itemGalery.querySelector('.galery-button-next')
+        let pagination = itemGalery.querySelector('.galery-pagination')
+        const swiperGalery = new Swiper(item, {
+            speed: 500,
+            // Navigation arrows
+            navigation: {
+              nextEl: next,
+              prevEl: prev,
+            },
+            pagination: {
+                el: pagination,
+                clickable: true,
+                renderBullet: function (index, className) {
+                    // Получаем все слайды
+                    const slides = item.querySelectorAll('.swiper-slide');
+                    // Извлекаем путь к изображению из слайда
+                    const imgSrc = slides[index].querySelector('img').getAttribute('src');
+                    // Возвращаем кастомный элемент пагинации
+                    return `
+                        <span class="${className}">
+                            <img src="${imgSrc}" alt="Thumbnail ${index + 1}">
+                        </span>
+                    `;
+                },
+              },
+        });
+    })
+
+    let reviews = document.querySelector('.review-sliders');
+    if(reviews) {
+        const swiperReviews = new Swiper('.review-sliders', {
+            spaceBetween: 6,
+            slidesPerView: 'auto',
+            speed: 500,
+            pagination: {
+                el: '.review-pagination',
+                clickable: true,
+              },
+        });
+    }
+
+    let additionally = document.querySelector('.prices-additionally-sliders');
+    if(additionally) {
+        const swiperAdditionally = new Swiper('.prices-additionally-sliders', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            speed: 500,
+            pagination: {
+                el: '.prices-additionally-pagination',
+                clickable: true,
+            },
+        });
+    }
+
+    let examples = document.querySelector('.prices-examples-sliders');
+    if(examples) {
+        const swiperPricesExamples = new Swiper('.prices-examples-sliders', {
+            slidesPerView: 1,
+            spaceBetween: 17.5,
+            initialSlide: 2,
+            speed: 500,
+            navigation: {
+                nextEl: '.prices-examples-button-next',
+                prevEl: '.prices-examples-button-prev',
+              },
+        });
+    }
+
+    let MetalPicket = document.querySelectorAll('.metal-picket-sliders')
+    if(MetalPicket.length >= 1) {
+        MetalPicket.forEach((item) => {
+            const swiperMetalPicket = new Swiper(item, {
+                slidesPerView: 'auto',
+                spaceBetween: 15,
+                speed: 500,
+                navigation: {
+                    nextEl: '.metal-picket-button-next',
+                    prevEl: '.metal-picket-button-prev',
+                  },
+            });
+        })
+    }
+})
