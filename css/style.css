@@ -7833,7 +7833,7 @@ body {
   padding: 156px 0 186px;
 }
 .contacts .container {
-  max-width: 1180px;
+  max-width: 1100px;
 }
 
 .contacts-row {
@@ -8070,29 +8070,14 @@ body {
   }
 }
 .reviesws-company {
+  position: relative;
   padding: 183px 0 63px;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 100%;
           flex: 1 1 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
 }
 .reviesws-company .container {
-  max-width: 1180px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.reviesws-company-row {
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 100%;
-          flex: 1 1 100%;
+  max-width: 1100px;
 }
 
 .reviesws-company-title {
@@ -8109,6 +8094,7 @@ body {
 }
 
 .reviesws-company-btns {
+  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8121,6 +8107,12 @@ body {
   -webkit-column-gap: 53px;
      -moz-column-gap: 53px;
           column-gap: 53px;
+  width: 100%;
+  bottom: 63px;
+  left: auto;
+  right: auto;
+  max-width: 1100px;
+  width: 100%;
 }
 
 @media (max-width: 767px) {
@@ -8135,5 +8127,10 @@ body {
   }
   .reviesws-company-text {
     max-width: 365px;
+  }
+  .reviesws-company-btns {
+    bottom: 155px;
+    position: relative;
+    bottom: 0;
   }
 }
