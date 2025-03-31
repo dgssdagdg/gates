@@ -5067,6 +5067,9 @@ body {
 .swing-gates .gate-installation .gate-installation-content {
   padding: 56px 27px 38px;
 }
+.swing-gates .gate-installation .gate-installation-text-mini {
+  display: none;
+}
 .swing-gates .installation .installation-texts {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
@@ -5657,6 +5660,9 @@ body {
   .swing-gates .prices .prices-includes-sub-title {
     margin-bottom: 29px;
   }
+  .swing-gates .prices .prices-includes-compound:nth-of-type(3), .swing-gates .prices .prices-includes-compound:nth-of-type(4) {
+    margin-bottom: 0;
+  }
   .swing-gates .gate-installation .gate-installation-top {
     padding: 28px 0 0 16px;
   }
@@ -5670,7 +5676,21 @@ body {
   .swing-gates .gate-installation .gate-installation-content {
     padding: 37px 16px;
   }
+  .swing-gates .gate-installation .gate-installation-text {
+    max-width: 356px;
+  }
+  .swing-gates .gate-installation .gate-installation-text {
+    display: none;
+  }
+  .swing-gates .gate-installation .gate-installation-text-mini {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
   .swing-gates .services .services-item {
+    grid-column-start: span 12;
+  }
+  .swing-gates .services .services-item:nth-of-type(4), .swing-gates .services .services-item:nth-of-type(5) {
     grid-column-start: span 12;
   }
   .swing-gates .answer-title {
@@ -8008,7 +8028,7 @@ body {
 }
 @media (max-width: 767px) {
   .contacts {
-    padding: 133px 0 159px;
+    padding: 133px 0 262px;
   }
   .contacts-title {
     margin-bottom: 44px;
@@ -8025,6 +8045,10 @@ body {
   }
   .contacts-text {
     font-size: 16px;
+  }
+  .contacts-text span {
+    color: #000 !important;
+    display: inline !important;
   }
   .contacts-img {
     max-width: 216px;
@@ -8115,22 +8139,33 @@ body {
   width: 100%;
 }
 
+.prices-includes-compounds-two {
+  display: none;
+}
+
 @media (max-width: 767px) {
   .reviesws-company-title {
     margin-bottom: 8px;
   }
   .reviesws-company-row {
-    margin-bottom: 349px;
+    margin-bottom: 50px;
   }
   .reviesws-company {
-    padding: 133px 0 155px;
+    padding: 133px 0 195px;
   }
   .reviesws-company-text {
     max-width: 365px;
   }
   .reviesws-company-btns {
-    bottom: 155px;
     position: relative;
     bottom: 0;
+  }
+  .prices-includes-compounds-one {
+    display: none !important;
+  }
+  .prices-includes-compounds-two {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
 }
