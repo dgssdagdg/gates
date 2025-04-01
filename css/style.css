@@ -7763,7 +7763,7 @@ body {
 }
 
 .types-of-gates-item {
-  padding: 37px 37px 37px 10px;
+  padding: 37px 37px 13px 10px;
   text-align: right;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 45%;
@@ -7772,7 +7772,7 @@ body {
 .types-of-gates-item:nth-of-type(2) {
   text-align: left;
   border-left: 1px solid #D9D9D9;
-  padding: 37px 12px 37px 37px;
+  padding: 37px 12px 13px 37px;
 }
 .types-of-gates-item:nth-of-type(2) .types-of-gates-item-img {
   margin-bottom: 88px;
@@ -7854,6 +7854,10 @@ body {
 }
 .contacts .container {
   max-width: 1100px;
+}
+
+.contacts-main .footer {
+  padding: 16px 0 124px;
 }
 
 .contacts-row {
@@ -8028,7 +8032,7 @@ body {
 }
 @media (max-width: 767px) {
   .contacts {
-    padding: 133px 0 262px;
+    padding: 133px 0 152px;
   }
   .contacts-title {
     margin-bottom: 44px;
@@ -8096,9 +8100,6 @@ body {
 .reviesws-company {
   position: relative;
   padding: 183px 0 63px;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 100%;
-          flex: 1 1 100%;
 }
 .reviesws-company .container {
   max-width: 1100px;
@@ -8118,7 +8119,6 @@ body {
 }
 
 .reviesws-company-btns {
-  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8131,12 +8131,7 @@ body {
   -webkit-column-gap: 53px;
      -moz-column-gap: 53px;
           column-gap: 53px;
-  width: 100%;
-  bottom: 63px;
-  left: auto;
-  right: auto;
-  max-width: 1100px;
-  width: 100%;
+  margin-top: 20px;
 }
 
 .prices-includes-compounds-two {
@@ -8151,7 +8146,7 @@ body {
     margin-bottom: 50px;
   }
   .reviesws-company {
-    padding: 133px 0 195px;
+    padding: 133px 0 60px;
   }
   .reviesws-company-text {
     max-width: 365px;
