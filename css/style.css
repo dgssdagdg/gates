@@ -5005,6 +5005,9 @@ body {
           justify-content: center;
 }
 
+.swing-gates .quiz .marquiz__container iframe {
+  height: 800px !important;
+}
 .swing-gates .services .services-item {
   grid-column-start: span 4;
 }
@@ -5353,6 +5356,9 @@ body {
   .european-picket .installation .installation-texts br {
     display: none;
   }
+  .swing-gates .quiz .marquiz__container iframe {
+    height: 1100px !important;
+  }
   .swing-gates .prices .prices-includes-img {
     max-width: 500px;
     margin: 0 auto;
@@ -5364,6 +5370,9 @@ body {
   }
   .swing-gates .prices .prices-includes-compound:nth-of-type(3), .swing-gates .prices .prices-includes-compound:nth-of-type(4) {
     margin-bottom: 0;
+  }
+  .swing-gates .services .services-item {
+    grid-column-start: span 6;
   }
 }
 @media (min-width: 767px) {
@@ -5655,6 +5664,9 @@ body {
         -ms-flex: 1 1 30%;
             flex: 1 1 30%;
   }
+  .swing-gates .quiz .marquiz__container iframe {
+    height: 800px !important;
+  }
   .swing-gates .prices .prices-includes-img {
     height: 314px;
   }
@@ -5779,6 +5791,9 @@ body {
   .european-picket .prices .prices-includes-number:nth-of-type(4) {
     top: 0%;
     right: 23%;
+  }
+  .swing-gates .quiz .marquiz__container iframe {
+    height: 700px !important;
   }
   .swing-gates .prices .prices-includes-img {
     height: 250px;
@@ -7985,6 +8000,7 @@ body {
   position: absolute;
   left: -221px;
   bottom: -203px;
+  pointer-events: none;
 }
 
 @media (max-width: 1200px) {
