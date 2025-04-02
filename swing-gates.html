@@ -8,37 +8,23 @@
     <!-- Marquiz script start -->
     <script async>
         (function(w, d, s, o){
-            var j = d.createElement(s); 
-            j.async = true; 
-            j.src = '//script.marquiz.ru/v2.js';
-            j.onload = function() {
-                // Запускаем Marquiz только после полной загрузки страницы
-                if (document.readyState === 'complete') {
-                    Marquiz.init(o);
-                } else {
-                    window.addEventListener('load', function() {
-                        Marquiz.init(o);
-                    });
-                }
-            };
-            d.head.appendChild(j); // Вместо insertBefore (меньше влияет на DOM)
+        var j = d.createElement(s); j.async = true; j.src = '//script.marquiz.ru/v2.js';j.onload = function() {
+            if (document.readyState !== 'loading') Marquiz.init(o);
+            else document.addEventListener("DOMContentLoaded", function() {
+            Marquiz.init(o);
+            });
+        };
+        d.head.insertBefore(j, d.head.firstElementChild);
         })(window, document, 'script', {
             host: '//quiz.marquiz.ru',
             region: 'ru',
-            id: '67e2d1560923210019f74d03',
-            cookieOptions: {
-                sameSite: 'None',  // Разрешает кросс-доменные куки
-                secure: true       // Только для HTTPS
-            },
-            gaOptions: {
-                anonymizeIp: true,
-                allowAdFeatures: false
-            },
+            id: '67ed16ff827bc2001993d03b',
             autoOpen: false,
             autoOpenFreq: 'once',
             openOnExit: false,
             disableOnMobile: false
-        });
+        }
+        );
     </script>
     <!-- Marquiz script end -->
     <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
@@ -101,7 +87,7 @@
                                 <a href="tel:+73832632350" class="header-tel">+7 (383) 263-23-50</a>
                                 <button type="button" class="header-open-pop-up _red-btn">перезвоните мне</button>
                             </div>
-                            <a href="https://mrqz.me/67e2d1560923210019f74d03?roistat_visit=10644420" class="header-btn-calculation _red-btn">
+                            <a href="https://mrqz.me/67ed16ff827bc2001993d03b" class="header-btn-calculation _red-btn">
                                 <svg width="18.000000" height="20.000000" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <path id="Vector" d="M1 0L17 0C17.55 0 18 0.44 18 1L18 19C18 19.55 17.55 20 17 20L1 20C0.44 20 0 19.55 0 19L0 1C0 0.44 0.44 0 1 0ZM4 10L4 12L6 12L6 10L4 10ZM4 14L4 16L6 16L6 14L4 14ZM8 10L8 12L10 12L10 10L8 10ZM8 14L8 16L10 16L10 14L8 14ZM12 10L12 16L14 16L14 10L12 10ZM4 4L4 8L14 8L14 4L4 4Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="nonzero"/>
                                 </svg>
@@ -380,7 +366,7 @@
                         </li>
                     </ul>
                 </nav>
-                <a href="https://mrqz.me/67e2d1560923210019f74d03?roistat_visit=10644420" class="menu-btn-red _red-btn">рассчет забора</a>
+                <a href="https://mrqz.me/67ed16ff827bc2001993d03b" class="menu-btn-red _red-btn">рассчет забора</a>
             </div>
         </div>
         <div class="photo" id="photoModal">
@@ -406,7 +392,7 @@
         </div>
         <div class="navigation _active">
             <div class="navigation-content">
-                <a href="https://mrqz.me/67e2d1560923210019f74d03?roistat_visit=10644420" class="navigation-item">
+                <a href="https://mrqz.me/67ed16ff827bc2001993d03b" class="navigation-item">
                     <svg width="18.000000" height="20.000000" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <path id="Vector" d="M1 0L17 0C17.55 0 18 0.44 18 1L18 19C18 19.55 17.55 20 17 20L1 20C0.44 20 0 19.55 0 19L0 1C0 0.44 0.44 0 1 0ZM4 10L4 12L6 12L6 10L4 10ZM4 14L4 16L6 16L6 14L4 14ZM8 10L8 12L10 12L10 10L8 10ZM8 14L8 16L10 16L10 14L8 14ZM12 10L12 16L14 16L14 10L12 10ZM4 4L4 8L14 8L14 4L4 4Z" fill="#D5DBE4" fill-opacity="1.000000" fill-rule="nonzero"/>
                     </svg>
@@ -495,7 +481,7 @@
                             <p class="intro-text">Наша компания занимается изготовлением и установкой распашных ворот под ключ, за счет собственного производства, мы гарантируем лучшее качество.</p>
                             <img width="416" height="246" src="./img/intro/swing-gates-mini.webp" alt="Каркас забора в Новосибирске" class="intro-content-img">
                             <div class="intro-btns">
-                                <a href="https://mrqz.me/67e2d1560923210019f74d03?roistat_visit=10644420" class="intro-btn-one _red-btn">
+                                <a href="https://mrqz.me/67ed16ff827bc2001993d03b" class="intro-btn-one _red-btn">
                                     <svg width="30.000000" height="30.000000" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                         <defs/>
                                         <path id="Vector" d="M25.5 30L4.5 30C2.01 30 0 27.98 0 25.5L0 1.5C0 0.67 0.67 0 1.5 0L22.5 0C23.32 0 24 0.67 24 1.5L24 19.5L30 19.5L30 25.5C30 27.98 27.98 30 25.5 30ZM24 22.5L24 25.5C24 26.32 24.67 27 25.5 27C26.32 27 27 26.32 27 25.5L27 22.5L24 22.5ZM6 7.5L6 10.5L18 10.5L18 7.5L6 7.5ZM6 13.5L6 16.5L18 16.5L18 13.5L6 13.5ZM6 19.5L6 22.5L13.5 22.5L13.5 19.5L6 19.5Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="nonzero"/>
@@ -613,20 +599,8 @@
                     <div class="quiz-row">
                         <div class="quiz-title _title">УЗНАЙ ЦЕНУ ЗАБОРА ЗА 1 МИНУТУ!</div>
                         <p class="quiz-text _text-fz24-fw500">Ответь на 5 вопросов и получи бесплатный расчет в whatsApp!</p>
-                        <div data-marquiz-id="67e2d1560923210019f74d03"></div>
-                        <script async>
-                        (function(t, p) {window.Marquiz ? Marquiz.add([t, p]) : document.addEventListener('marquizLoaded', function() 
-                        {Marquiz.add([t, p])})})('Inline', 
-                            {
-                            id: '67e2d1560923210019f74d03',
-                            buttonText: '«Старт»',
-                            bgColor: '#d34085', 
-                            textColor: '#ffffff', 
-                            rounded: true, 
-                            shadow: 'rgba(211, 64, 133, 0.5)', 
-                            blicked: true
-                        })
-                        </script>
+                        <div data-marquiz-id="67ed16ff827bc2001993d03b"></div>
+                        <script async>(function(t, p) {window.Marquiz ? Marquiz.add([t, p]) : document.addEventListener('marquizLoaded', function() {Marquiz.add([t, p])})})('Inline', {id: '67ed16ff827bc2001993d03b', buttonText: '«Старт»', bgColor: '#d34085', textColor: '#ffffff', rounded: true, shadow: 'rgba(211, 64, 133, 0.5)', blicked: true})</script>
                     </div>
                 </div>
             </section>
