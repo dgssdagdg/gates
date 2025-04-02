@@ -5357,7 +5357,7 @@ body {
     display: none;
   }
   .swing-gates .quiz .marquiz__container iframe {
-    height: 1100px !important;
+    height: 1110px !important;
   }
   .swing-gates .prices .prices-includes-img {
     max-width: 500px;
@@ -5665,7 +5665,7 @@ body {
             flex: 1 1 30%;
   }
   .swing-gates .quiz .marquiz__container iframe {
-    height: 800px !important;
+    height: 820px !important;
   }
   .swing-gates .prices .prices-includes-img {
     height: 314px;
@@ -5791,9 +5791,6 @@ body {
   .european-picket .prices .prices-includes-number:nth-of-type(4) {
     top: 0%;
     right: 23%;
-  }
-  .swing-gates .quiz .marquiz__container iframe {
-    height: 700px !important;
   }
   .swing-gates .prices .prices-includes-img {
     height: 250px;
